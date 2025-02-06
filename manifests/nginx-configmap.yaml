@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: shoppingify
+data:
+  nginx.conf: |
+    events {}
+    http {
+        server {
+            listen 80;
+            # Forward all incoming requests to the primary backend...
+            location / {
+                proxy_pass http://backend.shoppingify.svc.cluster.local:3500;
+                # ...and mirror them to the duplicate backend.
+                mirror /mirror;
+            }
+            # This location is used internally for mirroring only.
+            location = /mirror {
+                internal;
+                proxy_pass http://backend-dup.backend-duplicate.svc.cluster.local:3500;
+            }
+        }
+    }

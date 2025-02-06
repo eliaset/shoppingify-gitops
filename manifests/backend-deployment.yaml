@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  namespace: shoppingify
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: eliasetz/shoppingify-backend:v5
+          ports:
+            - containerPort: 3500
+          env:
+            - name: MONGODB_URI
+              value: "mongodb://mongodb.shoppingify.svc.cluster.local:27017"
+            - name: DB_NAME
+              value: "shoppingify"
+            - name: JWT_SECRET
+              value: "test123"
+            - name: JWT_EXPIRES_IN
+              value: "604800"
+            - name: FRONTEND_URL
+              value: "http://frontend.shoppingify.svc.cluster.local"

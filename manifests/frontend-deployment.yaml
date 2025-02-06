@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: shoppingify
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: eliasetz/shoppingify-frontend:v5
+          ports:
+            - containerPort: 5173
+          env:
+            - name: VITE_BACKEND_URL
+              value: "http://nginx-proxy.shoppingify.svc.cluster.local:80/api"
