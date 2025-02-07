@@ -52,7 +52,7 @@ Applications deployed:
 1. Apply the YAML files for deployments and services:
    ```bash
    kubectl apply -f namespace.yaml,mongodb-deployment.yaml,mongodb-service.yaml,mongodb-pvc.yaml
-   kubectl apply -f namespace.yaml,backend-deployment.yaml,backend-service.yaml,frontend-deployment.yaml,frontend-service.yaml
+   kubectl apply -f backend-deployment.yaml,backend-service.yaml,frontend-deployment.yaml,frontend-service.yaml
    ```
 
 ### 4. Duplicate Backend Application
